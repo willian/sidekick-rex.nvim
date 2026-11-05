@@ -29,7 +29,7 @@ esac
 EOF
 chmod +x "$tmp/rex"
 
-REPO="$repo" SIDEKICK_PATH="$SIDEKICK_PATH" FAKE_CLAUDE_PID="$claude_pid" \
+env -u TMUX REPO="$repo" SIDEKICK_PATH="$SIDEKICK_PATH" FAKE_CLAUDE_PID="$claude_pid" \
   REX_SESSION=session:test REX_BLOCK=block:editor PATH="$tmp:$PATH" \
   nvim --clean --headless -l "$repo/tests/smoke.lua"
 

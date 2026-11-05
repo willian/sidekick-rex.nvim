@@ -9,6 +9,12 @@ vim.notify = function(msg, level)
   end
 end
 
+-- Inside tmux the REX_* variables may be stale, so setup() must leave sidekick alone
+vim.env.TMUX = "/tmp/tmux-test,1,0"
+require("sidekick-rex").setup()
+assert(require("sidekick.cli.session").backends.rex == nil, "registered inside tmux")
+vim.env.TMUX = nil
+
 require("sidekick-rex").setup()
 require("sidekick").setup({ cli = { mux = { enabled = true, backend = "rex", split = { size = 0.4 } } } })
 vim.wait(50) -- sidekick validates its options on the next tick

@@ -1,9 +1,9 @@
 local M = {}
 
 -- Register the "rex" backend with sidekick, so `cli.mux.backend = "rex"` works.
--- Does nothing outside Rex.
+-- Does nothing outside Rex, or inside tmux, which can inherit the REX_* variables.
 function M.setup()
-  if not (vim.env.REX_SESSION and vim.env.REX_BLOCK) then
+  if not (vim.env.REX_SESSION and vim.env.REX_BLOCK) or vim.env.TMUX then
     return
   end
   require("sidekick.cli.session").register("rex", require("sidekick-rex.backend"))

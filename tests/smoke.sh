@@ -22,7 +22,7 @@ cat > "$tmp/rex" <<EOF
 printf '%s' "\$*" | tr '\n' '|' >> "$tmp/log"; echo >> "$tmp/log"
 case "\$3 \$4" in
   split*) printf '%s\n' '{' '  "block_ids": [' '    "block:runner"' '  ]' '}' ;;
-  "do com.superlogical.terminal.process") printf '{"child":{"pid":$claude_pid}}\n' ;;
+  "do -b") printf '{"child":{"pid":$claude_pid}}\n' ;;
   "do -e") printf '[{"block_id":"block:runner","pid":$claude_pid,"fg":{"pid":$claude_pid,"name":"sh","cwd":"$repo"}}]\n' ;;
   capture*) printf 'line 1\nline 2\n' ;;
 esac
@@ -35,7 +35,7 @@ REPO="$repo" SIDEKICK_PATH="$SIDEKICK_PATH" FAKE_CLAUDE_PID="$claude_pid" \
 
 log=$tmp/log
 grep -q "^-s session:test split -b block:editor --focus=false -c $repo --json --label claude --split=right --ratio 40 -- claude$" "$log"
-grep -q '^-s session:test do com.superlogical.terminal.process block_id=block:runner --json$' "$log"
+grep -q '^-s session:test do -b block:runner com.superlogical.terminal.process --json$' "$log"
 grep -q '^-s session:test send -b block:runner hello|$' "$log"
 grep -q '^-s session:test send-key -b block:runner enter$' "$log"
 grep -q '^-s session:test capture -b block:runner --format=vt$' "$log"

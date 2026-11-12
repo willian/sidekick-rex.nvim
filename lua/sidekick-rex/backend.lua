@@ -60,7 +60,7 @@ function M:start()
   if not block_id then
     return
   end
-  local proc = rex_json({ "do", "com.superlogical.terminal.process", "block_id=" .. block_id, "--json" }, { notify = false })
+  local proc = rex_json({ "do", "-b", block_id, "com.superlogical.terminal.process", "--json" }, { notify = false })
   self.rex_pid = proc and proc.child and proc.child.pid
   self.id = "rex " .. block_id
   self.rex_block_id = block_id

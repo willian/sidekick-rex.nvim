@@ -12,7 +12,7 @@ M.priority = 10
 M.external = true
 
 local function rex(args, opts)
-  return Util.exec(vim.list_extend({ "rex", "-s", vim.env.REX_SESSION }, args), opts)
+  return Util.exec(vim.list_extend({ "rex", "-s", vim.env.REX_BLOCK }, args), opts)
 end
 
 -- Every terminal pane in this Rex session with its process info, in one call
@@ -64,7 +64,7 @@ function M:start()
   self.rex_pid = proc and proc.child and proc.child.pid
   self.id = "rex " .. block_id
   self.rex_block_id = block_id
-  self.mux_session = vim.env.REX_SESSION
+  self.mux_session = vim.env.REX_BLOCK
   self.started = true
   Util.info(("Started **%s** in a new Rex split"):format(self.tool.name))
 end
@@ -88,7 +88,7 @@ function M.sessions()
             tool = tool,
             rex_block_id = pane.block_id,
             rex_pid = pane.pid,
-            mux_session = vim.env.REX_SESSION,
+            mux_session = vim.env.REX_BLOCK,
             pids = Procs.pids(pane.fg.pid), -- the pane's root (login) is root-owned, so start at the foreground
           }
           return true

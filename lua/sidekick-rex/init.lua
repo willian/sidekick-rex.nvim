@@ -3,7 +3,7 @@ local M = {}
 -- Register the "rex" backend with sidekick, so `cli.mux.backend = "rex"` works.
 -- Does nothing outside Rex.
 function M.setup()
-  if not (vim.env.REX_SESSION and vim.env.REX_BLOCK) then
+  if not vim.env.REX_BLOCK then
     return
   end
   require("sidekick.cli.session").register("rex", require("sidekick-rex.backend"))

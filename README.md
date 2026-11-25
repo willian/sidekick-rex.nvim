@@ -4,7 +4,7 @@ A [sidekick.nvim](https://github.com/folke/sidekick.nvim) backend that runs AI C
 
 It works like sidekick's tmux backend with `mux.create = "split"`: the tool starts in a Rex split beside the editor, in the project directory, without moving focus. Prompts you send from Neovim are typed into that pane, and sidekick finds tools already running in the current Rex session.
 
-Requires Neovim, sidekick.nvim, the `rex` CLI, and an editor running inside Rex (`REX_SESSION` and `REX_BLOCK` set). Outside Rex, `setup()` does nothing, so the same config works everywhere.
+Requires Neovim, sidekick.nvim, the `rex` CLI, and an editor running inside Rex (`REX_BLOCK` set). Outside Rex, `setup()` does nothing, so the same config works everywhere.
 
 ## Configuration
 
@@ -24,7 +24,7 @@ For Neovim (LazyVim):
     cli = {
       mux = {
         enabled = true,
-        backend = vim.env.REX_SESSION and "rex" or "tmux",
+        backend = vim.env.REX_BLOCK and "rex" or "tmux",
         create = "split",
         split = { size = 0.4 },
       },

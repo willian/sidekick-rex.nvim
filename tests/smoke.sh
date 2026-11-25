@@ -30,13 +30,13 @@ EOF
 chmod +x "$tmp/rex"
 
 REPO="$repo" SIDEKICK_PATH="$SIDEKICK_PATH" FAKE_CLAUDE_PID="$claude_pid" \
-  REX_SESSION=session:test REX_BLOCK=block:editor PATH="$tmp:$PATH" \
+  REX_BLOCK=block:editor PATH="$tmp:$PATH" \
   nvim --clean --headless -l "$repo/tests/smoke.lua"
 
 log=$tmp/log
-grep -q "^-s session:test split -b block:editor --focus=false -c $repo --json --label claude --split=right --ratio 40 -- claude$" "$log"
-grep -q '^-s session:test do com.superlogical.terminal.process block_id=block:runner --json$' "$log"
-grep -q '^-s session:test send -b block:runner hello|$' "$log"
-grep -q '^-s session:test send-key -b block:runner enter$' "$log"
-grep -q '^-s session:test capture -b block:runner --format=vt$' "$log"
+grep -q "^-s block:editor split -b block:editor --focus=false -c $repo --json --label claude --split=right --ratio 40 -- claude$" "$log"
+grep -q '^-s block:editor do com.superlogical.terminal.process block_id=block:runner --json$' "$log"
+grep -q '^-s block:editor send -b block:runner hello|$' "$log"
+grep -q '^-s block:editor send-key -b block:runner enter$' "$log"
+grep -q '^-s block:editor capture -b block:runner --format=vt$' "$log"
 echo "ok"
